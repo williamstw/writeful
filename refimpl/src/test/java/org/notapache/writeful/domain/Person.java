@@ -1,5 +1,6 @@
 package org.notapache.writeful.domain;
 
+import org.notapache.writeful.forms.FieldType;
 import org.notapache.writeful.forms.Writeful;
 
 import java.util.Date;
@@ -58,6 +59,7 @@ public class Person {
         this.fullName = fullName;
     }
 
+    @Writeful(type = FieldType.DATE)
     public Date getBirthDate() {
         return birthDate;
     }
@@ -66,6 +68,7 @@ public class Person {
         this.birthDate = birthDate;
     }
 
+    @Writeful(type = FieldType.EMAIL)
     public String getEmailAddress() {
         return emailAddress;
     }

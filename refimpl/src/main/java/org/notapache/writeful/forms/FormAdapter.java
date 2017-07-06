@@ -1,22 +1,15 @@
 package org.notapache.writeful.forms;
 
 
-import com.google.common.collect.Maps;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.PropertyAccessorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
-import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 
-
-import javax.crypto.BadPaddingException;
 import java.beans.PropertyDescriptor;
 import java.util.Map;
-import java.util.prefs.BackingStoreException;
 
 @Component
 public class FormAdapter {
@@ -53,11 +46,13 @@ public class FormAdapter {
         String display = String.join(" ", StringUtils.splitByCharacterTypeCamelCase(key));
         f.setDisplayText(StringUtils.capitalize(display));
 
-        if(descriptor.getReadMethod().isAnnotationPresent(Writeful.class)) {
+        if (descriptor.getReadMethod().isAnnotationPresent(Writeful.class)) {
             Writeful annotation = descriptor.getReadMethod().getAnnotation(Writeful.class);
-            if(StringUtils.isNotEmpty(annotation.display())) {
+
+            if (StringUtils.isNotEmpty(annotation.display())) {
                 f.setDisplayText(annotation.display());
             }
+            f.setType(annotation.type());
         }
 
 

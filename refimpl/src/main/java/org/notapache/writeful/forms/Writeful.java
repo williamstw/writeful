@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Writeful {
     public String display() default "";
+    public FieldType type() default FieldType.STRING;
 }

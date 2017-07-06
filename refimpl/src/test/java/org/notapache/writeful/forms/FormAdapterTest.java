@@ -1,9 +1,5 @@
 package org.notapache.writeful.forms;
 
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
-
 import com.google.common.collect.Lists;
 import org.junit.After;
 import org.junit.Before;
@@ -12,11 +8,7 @@ import org.junit.runner.RunWith;
 import org.notapache.writeful.Main;
 import org.notapache.writeful.domain.Person;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.LinkDiscoverer;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.hal.HalLinkDiscoverer;
-import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,11 +17,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -80,6 +74,15 @@ public class FormAdapterTest {
     public void defaultToPOSTMethod() throws Exception {
         Form form = getNewDefaultForm();
         assertThat("The default method is POST", form.getMethod(), equalTo(RequestMethod.POST));
+    }
+
+    @Test
+    public void supportCustomFieldTypes() throws Exception {
+        Forms newForms = adapter.createDefault(new Person());
+        Form form = newForms.getForms().get(Forms.DEFAULT);
+        List<Field> fields = form.getFields().stream().filter(f -> f.getName().equals("emailAddress")).collect(Collectors.toList());
+
+        assertThat("We get back the expected fields.", fields.get(0).getType(), equalTo(FieldType.EMAIL));
     }
 
     @Test
