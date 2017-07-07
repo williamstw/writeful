@@ -1,5 +1,6 @@
 package org.notapache.writeful.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.notapache.writeful.forms.FieldType;
 import org.notapache.writeful.forms.Writeful;
 
@@ -75,5 +76,10 @@ public class Person {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    @JsonIgnore
+    public String getNonSenseIgnoredProperty() {
+        return "fail";
     }
 }

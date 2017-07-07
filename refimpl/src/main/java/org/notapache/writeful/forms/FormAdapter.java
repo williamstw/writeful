@@ -1,6 +1,7 @@
 package org.notapache.writeful.forms;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,8 +31,12 @@ public class FormAdapter {
         Class<?> clazz = object.getClass();
 
         for (Map.Entry<String, Object> e : props.entrySet()) {
-            if (!"class".equals(e.getKey()))
-                defaultForm.getFields().add(createField(e.getKey(), PropertyUtils.getPropertyDescriptor(object, e.getKey())));
+            if (!"class".equals(e.getKey())) {
+                PropertyDescriptor propertyDescriptor = PropertyUtils.getPropertyDescriptor(object, e.getKey());
+                if(!propertyDescriptor.getReadMethod().isAnnotationPresent(JsonIgnore.class)) {
+                    defaultForm.getFields().add(createField(e.getKey(), propertyDescriptor));
+                }
+            }
         }
 
         forms.getForms().put(Forms.DEFAULT, defaultForm);

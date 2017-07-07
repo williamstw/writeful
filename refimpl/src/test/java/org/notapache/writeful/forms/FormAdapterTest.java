@@ -95,6 +95,16 @@ public class FormAdapterTest {
     }
 
     @Test
+    public void respectJsonIgnores() throws Exception {
+        Forms newForms = adapter.createDefault(new Person());
+        Form form = newForms.getForms().get(Forms.DEFAULT);
+        List<Field> fields = form.getFields().stream().filter(f -> f.getName().equals("nonSenseIgnoredProperty")).collect(Collectors.toList());
+        form.getFields().stream().forEach(f -> System.out.println(f.getName()));
+        assertThat("JsonIgnored property should have been ignored.", fields.size(), equalTo(0));
+    }
+
+
+    @Test
     public void defaultDisplayFieldToUncamelize() throws Exception {
         Forms newForms = adapter.createDefault(new Person());
         Form form = newForms.getForms().get(Forms.DEFAULT);
