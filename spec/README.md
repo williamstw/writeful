@@ -28,29 +28,17 @@ The following is an example document representing data entry for a Person:
     HTTP/1.1 200 OK
     Content-Type: application/hal+json; profile="https://github.com/williamstw/writeful"
  ```javascript   
-    {
+ {
   "_forms" : {
     "default" : {
       "contentType" : "application/hal+json",
       "method" : "POST",
       "fields" : [ {
-        "name" : "birthDate",
-        "path" : "/birthDate",
+        "name" : "emailAddress",
+        "path" : "/emailAddress",
         "value" : null,
-        "displayText" : "Birth Date",
-        "type" : "string"
-      }, {
-        "name" : "lastName",
-        "path" : "/lastName",
-        "value" : null,
-        "displayText" : "Last Name",
-        "type" : "string"
-      }, {
-        "name" : "firstName",
-        "path" : "/firstName",
-        "value" : null,
-        "displayText" : "First Name",
-        "type" : "string"
+        "displayText" : "Email Address",
+        "type" : "email"
       }, {
         "name" : "middleName",
         "path" : "/middleName",
@@ -64,11 +52,23 @@ The following is an example document representing data entry for a Person:
         "displayText" : "Full Name",
         "type" : "string"
       }, {
-        "name" : "emailAddress",
-        "path" : "/emailAddress",
+        "name" : "firstName",
+        "path" : "/firstName",
         "value" : null,
-        "displayText" : "Email Address",
+        "displayText" : "First Name",
         "type" : "string"
+      }, {
+        "name" : "lastName",
+        "path" : "/lastName",
+        "value" : null,
+        "displayText" : "Surname",
+        "type" : "string"
+      }, {
+        "name" : "birthDate",
+        "path" : "/birthDate",
+        "value" : null,
+        "displayText" : "Birth Date",
+        "type" : "date"
       } ],
       "_links" : {
         "target" : {
